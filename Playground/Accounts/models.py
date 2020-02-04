@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 # External Imports
 from uuid import uuid4
@@ -59,19 +59,16 @@ class UserManager(BaseUserManager):
         return user
 
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     # Default fields
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     username = models.CharField(max_length=255, unique=True)
     email = models.EmailField()
-    date_joined = models.DateTimeField(
-        auto_now_add=True, verbose_name="Joined at")
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
 
     # Additional fields
     gender = models.CharField(choices=GENDER, max_length=50)
@@ -88,11 +85,11 @@ class User(AbstractBaseUser):
     def __str__(self):
         return f'@{self.username}'
 
-    def has_perm(self, perm, obj=None):
-        return self.is_admin
+    # def has_perm(self, perm, obj=None):
+    #     return self.is_admin
 
-    def has_module_perms(self, app_label):
-        return True
+    # def has_module_perms(self, app_label):
+    #     return True
 
     def get_full_name(self):
         return f'{self.first_name} {self.last_name}'
