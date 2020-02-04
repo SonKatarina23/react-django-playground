@@ -73,10 +73,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     # Additional fields
     gender = models.CharField(choices=GENDER, max_length=50)
     phone_number = PhoneNumberField(blank=True)
-    bio = models.CharField(max_length=322)
+    bio = models.CharField(max_length=322, blank=True)
     followers = models.ManyToManyField(
         "User", related_name="followings", blank=True)
-    profie_picture = models.ImageField(upload_to=pfp_directory, blank=True)
+    profile_picture = models.ImageField(upload_to=pfp_directory, blank=True)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ('email',)
