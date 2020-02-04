@@ -32,7 +32,7 @@ GENDER = (
 def pfp_directory(instance, filename):
     file_extension = filename.split('.')[-1]
     filename = f'user_ProfilePicture.{file_extension}'
-    return f'photos/user_{instance.user.username}/{filename}'
+    return f'photos/user_{instance.username}/{filename}'
 
 
 class UserManager(BaseUserManager):
@@ -44,7 +44,7 @@ class UserManager(BaseUserManager):
 
         user = self.model(
             username=username,
-            email=self.normalize_email(email)
+            email=self.normalize_email(email),
         )
         user.set_password(password)
         user.save(using=self._db)
@@ -64,7 +64,7 @@ class User(AbstractBaseUser):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    username = models.CharField(max_length=255)
+    username = models.CharField(max_length=255, unique=True)
     email = models.EmailField()
     date_joined = models.DateTimeField(
         auto_now_add=True, verbose_name="Joined at")
@@ -74,10 +74,11 @@ class User(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
 
     # Additional fields
-    gender = models.CharField(choices=GENDER)
+    gender = models.CharField(choices=GENDER, max_length=50)
     phone_number = PhoneNumberField(blank=True)
     bio = models.CharField(max_length=322)
-    followers = models.ManyToManyField("User", related_name="followings")
+    followers = models.ManyToManyField(
+        "User", related_name="followings", blank=True)
     profie_picture = models.ImageField(upload_to=pfp_directory, blank=True)
 
     USERNAME_FIELD = 'username'

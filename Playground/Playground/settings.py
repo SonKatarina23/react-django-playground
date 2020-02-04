@@ -131,7 +131,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Setting custom-made User as default
-AUTH_BASE_USER = 'Accounts.User'
+AUTH_USER_MODEL = 'Accounts.User'
 
 # Media configuration
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
