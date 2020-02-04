@@ -33,7 +33,8 @@ class PostSerializer(serializers.ModelSerializer):
         fields = '__all__'
         extra_kwargs = {
             'id': {'read_only': True},
-            'liked_by': {'read_only': True},
+            'owner': {'read_only': True},
+            'liked_by': {'read_only': True}
         }
 
     def create(self, validated_data):
@@ -47,6 +48,7 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = '__all__'
         extra_kwargs = {
             'id': {'read_only': True},
+            'owner': {'read_only': True},
         }
 
     def create(self, validated_data):
