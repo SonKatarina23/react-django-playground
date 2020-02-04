@@ -44,7 +44,10 @@ INSTALLED_APPS = [
 
     # Custom Application
     'Accounts',
-    'Post'
+    'Post',
+
+    # Others
+    'phonenumber_field'
 ]
 
 MIDDLEWARE = [
@@ -126,3 +129,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Setting custom-made User as default
+AUTH_BASE_USER = 'Accounts.User'
+
+# Media configuration
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
