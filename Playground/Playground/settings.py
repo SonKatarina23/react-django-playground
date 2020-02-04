@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # Custom Application
     'Accounts',
     'Post',
+    'Core',
 
     # Others
     'phonenumber_field'
