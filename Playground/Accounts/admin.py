@@ -2,9 +2,14 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext as _
 from django.contrib.auth import get_user_model
-# from .models import User
+
+from Post.admin import PostInLine
 
 User = get_user_model()
+
+#  if your user model extends AbstractBaseUser, you’ll need to define a custom ModelAdmin class. It may be possible to subclass the default django.contrib.auth.admin.UserAdmin; however, you’ll need to override any of the definitions that refer to fields on django.contrib.auth.models.AbstractUser that aren’t on your custom user class.
+
+# https://docs.djangoproject.com/en/3.0/topics/auth/customizing/#extending-the-existing-user-model
 
 
 class UserAdmin(BaseUserAdmin):
@@ -26,6 +31,8 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('username', 'email', 'password1', 'password2', 'first_name', 'last_name', 'gender', 'phone_number', 'bio', 'followers', 'profile_picture', 'is_active', 'is_staff', 'is_superuser', 'is_admin',)
         }),
     )
+    filter_horizontal = ('followers',)
+    inlines = [PostInLine]
 
 
 admin.site.register(User, UserAdmin)
