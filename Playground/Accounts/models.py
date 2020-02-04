@@ -4,13 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 
 # External imports
 from uuid import uuid4
-from phonenumber_field.modelfields import PhoneNumberField
-
-GENDER = (
-    ('M', 'Male'),
-    ('F', 'Female'),
-    ('X', "Prefer not to mention")
-)
+from phone_field import PhoneField
 
 
 class UserManager(BaseUserManager):
@@ -47,10 +41,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
 
     # Additional Attributes
-    gender = models.CharField(
-        max_length=50, choices=GENDER, default='M', blank=True)
     bio = models.CharField(max_length=322)
-    phone_number = PhoneNumberField(blank=True)
+    # phone_number = PhoneField(blank=True)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
