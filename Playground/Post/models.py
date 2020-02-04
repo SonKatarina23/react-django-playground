@@ -15,7 +15,8 @@ class Post(models.Model):
         User, on_delete=models.CASCADE, related_name='posts')
     photo = models.ImageField(upload_to=post_directory)
     captions = models.TextField(max_length=420, blank=True)
-    liked_by = models.ManyToManyField(User, related_name='liked_posts')
+    liked_by = models.ManyToManyField(
+        User, related_name='liked_posts', blank=True)
 
     def __str__(self):
         return f'Post [{self.id}]'

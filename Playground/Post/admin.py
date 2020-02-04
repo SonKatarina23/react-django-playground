@@ -7,10 +7,6 @@ class CommentInLine(admin.TabularInline):
     extra = 3
 
 
-class PostInLine(admin.TabularInline):
-    model = Post
-
-
 class PostAdmin(admin.ModelAdmin):
     list_display = ('owner', 'photo')
     list_display_links = ('owner', 'photo')
