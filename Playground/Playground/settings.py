@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
 
+    # Extras
+    'phonenumber_field',
+
     # Custom Application
     'Accounts',
     'Post'
