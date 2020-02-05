@@ -14,11 +14,9 @@ class UserSerializer(serializers.ModelSerializer):
             'followers', 'followings', 'posts',
         )
 
+        read_only_fields = ['id', 'followers', 'followings', 'posts']
+
         extra_kwargs = {
-            'id': {'read_only': True},
-            'followers': {'read_only': True},
-            'followings': {'read_only': True},
-            'posts': {'read_only': True},
             'first_name': {'write_only': True},
             'first_name': {'write_only': True},
             'password': {
@@ -39,7 +37,7 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = '__all__'
-        read_only_fields = ['id', 'owner', ]
+        read_only_fields = ['id', 'owner', 'created_at', ]
 
     def create(self, validated_data):
         comment = Comment.objects.create(**validated_data)
@@ -53,8 +51,10 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('id', 'owner', 'photo', 'captions', 'liked_by', 'comments',)
-        read_only_fields = ['id', 'owner', 'comments', 'liked_by']
+        fields = ('id', 'owner', 'photo', 'captions',
+                  'created_at', 'liked_by', 'comments',)
+        read_only_fields = ['id', 'owner',
+                            'created_at', 'comments', 'liked_by']
 
     def create(self, validated_data):
         post = Post.objects.create(**validated_data)
