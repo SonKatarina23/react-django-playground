@@ -3,16 +3,22 @@ from Accounts.models import User
 from Post.models import Post, Comment
 
 
+# ============================================== ACCOUNTS APP ===========================================
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
             'id', 'first_name', 'last_name', 'username', 'email', 'password',
-            'gender', 'phone_number', 'bio', 'profile_picture'
+            'gender', 'phone_number', 'bio', 'profile_picture',
+            'followers', 'followings', 'posts',
         )
 
         extra_kwargs = {
             'id': {'read_only': True},
+            'followers': {'read_only': True},
+            'followings': {'read_only': True},
+            'posts': {'read_only': True},
             'first_name': {'write_only': True},
             'first_name': {'write_only': True},
             'password': {
@@ -26,17 +32,14 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         return user
 
-# Write it above here so that Post can use it a related field
+# ============================================== POST APP ===========================================
 
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = '__all__'
-        extra_kwargs = {
-            'id': {'read_only': True},
-            'owner': {'read_only': True},
-        }
+        read_only_fields = ['id', 'owner', ]
 
     def create(self, validated_data):
         comment = Comment.objects.create(**validated_data)
@@ -45,16 +48,13 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     # NESTED SERIALIZER FOR REVERSE RELATIONSHIP
-    comments = CommentSerializer(many=True)
+    owner = UserSerializer(read_only=True)
+    comments = CommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Post
-        fields = '__all__'
-        extra_kwargs = {
-            'id': {'read_only': True},
-            'owner': {'read_only': True},
-            'liked_by': {'read_only': True}
-        }
+        fields = ('id', 'owner', 'photo', 'captions', 'liked_by', 'comments',)
+        read_only_fields = ['id', 'owner', 'comments', 'liked_by']
 
     def create(self, validated_data):
         post = Post.objects.create(**validated_data)
