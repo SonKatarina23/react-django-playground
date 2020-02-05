@@ -14,3 +14,10 @@ class UserCRUDPermission(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         return request.user.id == obj.id or request.user.is_superuser
+
+
+class PostCommentPermission(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        return request.user.id == obj.owner.id

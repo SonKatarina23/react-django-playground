@@ -11,5 +11,3 @@ urlpatterns = [
     path('login/', views.UserLoginView.as_view()),
     path('', include(router.urls)),
 ]
-
-# Carin cf89177a222a0e0341b44565f6c7555b6f7d7b0f

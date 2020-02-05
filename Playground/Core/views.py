@@ -2,9 +2,10 @@ from rest_framework import viewsets, filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.settings import api_settings
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .serializers import UserSerializer, PostSerializer, CommentSerializer
-from .permissions import UserCRUDPermission
+from .permissions import UserCRUDPermission, PostCommentPermission
 
 from Accounts.models import User
 from Post.models import Post, Comment
@@ -27,6 +28,7 @@ class UserLoginView(ObtainAuthToken):
 class PostViewset(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     queryset = Post.objects.all()
+    permission_classes = (IsAuthenticatedOrReadOnly, UserCRUDPermission,)
 
     def perform_create(self, serializer):
         if not self.request.user.is_authenticated:
@@ -38,6 +40,7 @@ class PostViewset(viewsets.ModelViewSet):
 class CommentViewset(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
+    permission_classes = (IsAuthenticatedOrReadOnly, UserCRUDPermission,)
 
     def perform_create(self, serializer):
         if not self.request.user.is_authenticated:
