@@ -1,25 +1,32 @@
 import React, { Component, Fragment } from "react";
+import TimeAgo from "react-timeago";
 
 export class SinglePost extends Component {
   renderList() {
     console.log(this.props.posts);
-    const { photo, captions, owner, liked_by, comments } = this.props.posts;
+    const {
+      photo,
+      captions,
+      owner,
+      liked_by,
+      comments,
+      created_at
+    } = this.props.posts;
 
     return (
       <Fragment>
         <div className="twelve wide column">
           <div className="ui card fluid">
             <div className="content">
-              <div className="right floated meta"> ??? hours</div>
+              <div className="right floated meta">
+                <TimeAgo date={created_at} />
+              </div>
               <img
                 className="ui avatar image"
-                // src={owner.profile_picture}
-                // alt={owner.username}
-                src=""
-                alt="PROFILE PICTURE"
+                src={owner.profile_picture}
+                alt={owner.username}
               />
-              {/* {owner.username} */}
-              USERNAME
+              {owner.username}
             </div>
             <div className="image">
               <img src={photo} className="ui massive image" alt="" />
