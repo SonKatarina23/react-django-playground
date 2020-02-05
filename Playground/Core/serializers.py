@@ -26,20 +26,7 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         return user
 
-
-class PostSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Post
-        fields = '__all__'
-        extra_kwargs = {
-            'id': {'read_only': True},
-            'owner': {'read_only': True},
-            'liked_by': {'read_only': True}
-        }
-
-    def create(self, validated_data):
-        post = Post.objects.create(**validated_data)
-        return post
+# Write it above here so that Post can use it a related field
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -54,3 +41,21 @@ class CommentSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         comment = Comment.objects.create(**validated_data)
         return comment
+
+
+class PostSerializer(serializers.ModelSerializer):
+    # NESTED SERIALIZER FOR REVERSE RELATIONSHIP
+    comments = CommentSerializer(many=True)
+
+    class Meta:
+        model = Post
+        fields = '__all__'
+        extra_kwargs = {
+            'id': {'read_only': True},
+            'owner': {'read_only': True},
+            'liked_by': {'read_only': True}
+        }
+
+    def create(self, validated_data):
+        post = Post.objects.create(**validated_data)
+        return post
