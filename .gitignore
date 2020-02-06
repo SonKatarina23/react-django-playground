@@ -147,3 +147,8 @@ bower_components
 psd
 thumb
 sketch
+
+# Markups
+
+**/Markup/*.jpg
+**/Markup/*.png
