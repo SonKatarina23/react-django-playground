@@ -1,0 +1,9 @@
+a {
+  text-decoration: none !important;
+}
+
+#right-side {
+  position: fixed;
+  top: 7%;
+  right: 6%;
+}
