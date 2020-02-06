@@ -36,7 +36,7 @@ def pfp_directory(instance, filename):
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, password=None):
+    def create_user(self, username, email, password=None, **args):
         if not username:
             raise ValueError('You need to have a valid username')
         elif not email:
@@ -45,12 +45,13 @@ class UserManager(BaseUserManager):
         user = self.model(
             username=username,
             email=self.normalize_email(email),
+            **args
         )
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, email, password):
+    def create_superuser(self, username, email, password, **args):
         user = self.create_user(username, email, password)
         user.is_staff = True
         user.is_admin = True

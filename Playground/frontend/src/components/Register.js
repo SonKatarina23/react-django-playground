@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-// import { Link, Redirect } from "react-router-dom";
-// import { connect } from "react-redux";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
 // Import static images
 import Chadtagram from "../static-images/Chadtagram.png";
@@ -91,8 +91,7 @@ export class Register extends Component {
             </form>
           </div>
           <p className="text-center mb-3">
-            Already have an account?
-            <a href="">Login</a>
+            Already have an account ?<Link to="/login"> Login</Link>
           </p>
         </div>
       </div>
