@@ -8,7 +8,7 @@ import Chadtagram from "../static-images/Chadtagram.png";
 export class Navbar extends Component {
   render() {
     return (
-      <section id="navbar">
+      <section id="navbar" className="mb-5">
         <div className="ui pointing fixed menu mb-5">
           <div className="container">
             <Link to="/" className="item">

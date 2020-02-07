@@ -17,6 +17,7 @@ export default (state = initialState, action) => {
     case LOGIN_SUCCESS:
       const { user, token } = action.payload;
       localStorage.setItem("token", token);
+      console.log(user);
       return {
         ...state,
         isAuthenticated: true,

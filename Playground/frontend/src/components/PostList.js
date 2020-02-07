@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchPosts } from "../actions";
+import { Link } from "react-router-dom";
 
 import SinglePost from "./SinglePost";
 import Navbar from "./Navbar";
@@ -17,6 +18,35 @@ export class PostList extends Component {
       return <SinglePost posts={post} key={post.id} />; // Send single post prop to SinglePost component
     });
   }
+
+  renderIdentity() {
+    const { currentUser } = this.props;
+    return (
+      // IDENTITY
+      <section id="identity">
+        <div className="ui segment mt-5">
+          <div className="ui items">
+            <div className="item">
+              <Link to="/profile" className="ui mini circular image">
+                <img src="chaeyoung2.jpg" alt="Chae" />
+              </Link>
+              {/* <a href="" className="ui mini circular image">
+                <img src="chaeyoung2.jpg" alt="Chae" />
+              </a> */}
+              <div className="content">
+                <a href="" className="">
+                  <strong>{`${currentUser.first_name} ${currentUser.last_name}`}</strong>
+                </a>
+                <div className="description">
+                  <p className="ui meta tiny">{`@${currentUser.username}`}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
   render() {
     return (
       <div>
@@ -28,6 +58,10 @@ export class PostList extends Component {
                 <section id="post-list">{this.renderPosts()}</section>
               </div>
             </div>
+
+            <div className="five wide column" id="right-side">
+              {this.renderIdentity()}
+            </div>
           </div>
         </div>
       </div>
@@ -37,7 +71,8 @@ export class PostList extends Component {
 
 const mapStateToProps = state => {
   return {
-    posts: state.posts // Get ALL posts from redux store and use it as props to the component
+    posts: state.posts, // Get ALL posts from redux store and use it as props to the component,
+    currentUser: state.auth.currentUser
   };
 };
 export default connect(mapStateToProps, { fetchPosts })(PostList);

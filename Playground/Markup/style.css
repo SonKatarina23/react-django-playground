@@ -2,12 +2,12 @@ a {
   text-decoration: none !important;
 }
 
-/* #right-side {
+#right-side {
   position: fixed;
-  top: 5.5%;
-  right: 10%;
-  max-width: 25%;
-} */
+  top: 8%;
+  right: 15%;
+  /* max-width: 25%; */
+}
 
 #scroll {
   overflow-x: hidden;
