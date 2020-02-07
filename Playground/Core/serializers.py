@@ -17,8 +17,6 @@ class UserSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'followers', 'followings', 'posts']
 
         extra_kwargs = {
-            'first_name': {'write_only': True},
-            'first_name': {'write_only': True},
             'password': {
                 'write_only': True,
                 'style': {'input_type': 'password'}
@@ -30,6 +28,13 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         return user
 
+
+# class LoginSerializer(serializers.Serializer):
+#     username = serializers.CharField(required=True)
+#     password = serializers.CharField(
+#         write_only=True, required=True,
+#         style={'input_type': 'password'}
+#     )
 # ============================================== POST APP ===========================================
 
 

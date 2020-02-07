@@ -21,6 +21,14 @@ export class PostList extends Component {
 
   renderIdentity() {
     const { currentUser } = this.props;
+    /**
+     * P.S Note :
+     * IDK for whatever reasons despite the fact that user's profile picture is clearly shown
+     * with full URL in the back end, when axios fetches it with thunk through action creators,
+     * it only gets 'media/....' as URL, so I have to add this somewhat strange configuration
+     */
+    const baseURL = "http://localhost:8000";
+    console.log(currentUser);
     return (
       // IDENTITY
       <section id="identity">
@@ -28,11 +36,8 @@ export class PostList extends Component {
           <div className="ui items">
             <div className="item">
               <Link to="/profile" className="ui mini circular image">
-                <img src="chaeyoung2.jpg" alt="Chae" />
+                <img src={baseURL + currentUser.profile_picture} alt="Chae" />
               </Link>
-              {/* <a href="" className="ui mini circular image">
-                <img src="chaeyoung2.jpg" alt="Chae" />
-              </a> */}
               <div className="content">
                 <a href="" className="">
                   <strong>{`${currentUser.first_name} ${currentUser.last_name}`}</strong>

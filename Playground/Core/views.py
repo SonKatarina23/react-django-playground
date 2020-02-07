@@ -1,5 +1,6 @@
 from rest_framework import viewsets, filters
 from rest_framework.response import Response
+from rest_framework.generics import GenericAPIView
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
@@ -34,6 +35,16 @@ class UserViewset(viewsets.ModelViewSet):
 
 class UserLoginView(ObtainAuthToken):
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data,
+                                           context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        return Response({
+            'token': Token.objects.get_or_create(user=user)[0].key,
+            'user': UserSerializer(user).data
+        })
 
 
 class PostViewset(viewsets.ModelViewSet):
