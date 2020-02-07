@@ -1,10 +1,14 @@
-import { FETCH_SINGLE_USER } from "../actions/type";
+import { FETCH_SINGLE_USER, DATA_ALREADY_EXISTS } from "../actions/type";
+
 const initialState = [];
 
-export default (state = initialState, { type, payload }) => {
-  switch (type) {
+export default (state = initialState, action) => {
+  switch (action.type) {
     case FETCH_SINGLE_USER:
-      return { ...state, ...payload };
+      return [...state, action.payload];
+
+    case DATA_ALREADY_EXISTS:
+      return state;
 
     default:
       return state;

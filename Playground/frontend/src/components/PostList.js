@@ -69,7 +69,7 @@ export class PostList extends Component {
                 to={{
                   pathname: `/${currentUser.username}`,
                   state: {
-                    userIdToLoad: currentUser.id
+                    userToLoad: currentUser
                   }
                 }}
                 className="ui mini circular image"
