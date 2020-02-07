@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { login } from "../actions";
 
 // Load static image
 import Chadtagram from "../static-images/Chadtagram.png";
@@ -16,12 +17,15 @@ export class Login extends Component {
   onSubmit = e => {
     e.preventDefault();
     const { username, password } = this.state;
-    console.log("Login submitted");
+    this.props.login(username, password);
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   render() {
+    if (this.props.isAuthenticated) {
+      return <Redirect to="/" />;
+    }
     const { username, password } = this.state;
 
     return (
@@ -94,4 +98,10 @@ export class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated
+  };
+};
+
+export default connect(mapStateToProps, { login })(Login);

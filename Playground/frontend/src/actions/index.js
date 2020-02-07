@@ -1,10 +1,17 @@
 // =========================================================================================
 // ==================================   ACTIONS   ==========================================
 // =========================================================================================
-import { FETCH_POSTS, REGISTER_USER } from "./type";
+import {
+  FETCH_POSTS,
+  REGISTER_SUCCESS,
+  REGISTER_FAILED,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED
+} from "./type";
 
 import ChadAPI from "../api/ChadAPI";
 
+// GET POSTS
 export const fetchPosts = () => async dispatch => {
   const response = await ChadAPI.get("Post/");
   dispatch({
@@ -13,6 +20,7 @@ export const fetchPosts = () => async dispatch => {
   });
 };
 
+// REGISTER NEW USER
 export const register = ({
   first_name,
   last_name,
@@ -35,9 +43,38 @@ export const register = ({
     password,
     gender
   });
-  const res = await ChadAPI.post("User/", body, config);
-  dispatch({
-    type: REGISTER_USER,
-    payload: res.data
-  });
+
+  try {
+    const res = await ChadAPI.post("User/", body, config);
+    dispatch({
+      type: REGISTER_SUCCESS,
+      payload: res.data
+    });
+  } catch (e) {
+    dispatch({ type: REGISTER_FAILED });
+  }
+};
+
+// LOGIN USER
+export const login = (username, password) => async dispatch => {
+  console.log("LOGIN ACTION INVOKED");
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  const body = JSON.stringify({ username, password });
+
+  try {
+    const res = await ChadAPI.post("login/", body, config);
+    console.log("LOGIN SUCCESS");
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data
+    });
+  } catch (e) {
+    console.log("LOGIN FAILED");
+    dispatch({ type: LOGIN_FAILED });
+  }
 };
