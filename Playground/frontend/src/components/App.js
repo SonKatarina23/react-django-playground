@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 // Internal Component Imports
+
 import PostList from "./PostList";
 import Register from "./Register";
 import Login from "./Login";

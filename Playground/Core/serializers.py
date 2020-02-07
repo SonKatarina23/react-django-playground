@@ -34,9 +34,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    owner = UserSerializer(read_only=True)
+
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = ('id', 'owner', 'post', 'comment', 'created_at')
         read_only_fields = ['id', 'owner', 'created_at', ]
 
     def create(self, validated_data):

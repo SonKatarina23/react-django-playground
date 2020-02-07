@@ -3,20 +3,35 @@ import { connect } from "react-redux";
 import { fetchPosts } from "../actions";
 
 import SinglePost from "./SinglePost";
+import Navbar from "./Navbar";
+import "../css/style.css";
 
 export class PostList extends Component {
   componentDidMount() {
     this.props.fetchPosts();
   }
 
-  renderList() {
+  renderPosts() {
     const { posts } = this.props;
     return posts.map(post => {
       return <SinglePost posts={post} key={post.id} />; // Send single post prop to SinglePost component
     });
   }
   render() {
-    return <div>{this.renderList()}</div>;
+    return (
+      <div>
+        <Navbar />
+        <div className="ui container">
+          <div className="ui grid">
+            <div className="eleven wide column">
+              <div id="scroll">
+                <section id="post-list">{this.renderPosts()}</section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 
