@@ -9,13 +9,9 @@ import DefaultUnknown from "../static-images/default-unknown-pfp.png";
 import "../css/style.css";
 
 export class Profile extends Component {
-  ownProfile = false;
   componentDidMount() {
     const { userToLoad } = this.props.location.state;
-    const { currentUser } = this.props;
-
     this.props.fetchSingleUser(userToLoad.id);
-    this.ownProfile = currentUser.id === userToLoad.id;
   }
 
   getImage() {
@@ -54,7 +50,10 @@ export class Profile extends Component {
   }
 
   followBtn() {
-    if (!this.ownProfile) {
+    const { userToLoad } = this.props.location.state;
+    const { currentUser } = this.props;
+    if (userToLoad.id !== currentUser.id) {
+      console.log("this is not own profile");
       return (
         <button className="ui button small primary" id="follow-profile">
           <i className="user icon"></i>
@@ -66,7 +65,6 @@ export class Profile extends Component {
 
   renderGallery() {
     const { posts } = this.props.location.state.userToLoad;
-
     return posts.map(post => {
       return (
         <div key={post.id} className="five wide column mb-2">
