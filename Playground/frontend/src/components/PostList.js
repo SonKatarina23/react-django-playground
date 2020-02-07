@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchPosts } from "../actions";
+import { fetchPosts } from "../actions/postsActions";
 import { Link } from "react-router-dom";
 
 import SinglePost from "./SinglePost";
@@ -35,7 +35,16 @@ export class PostList extends Component {
         <div className="ui segment mt-5">
           <div className="ui items">
             <div className="item">
-              <Link to="/profile" className="ui mini circular image">
+              <Link
+                to={{
+                  pathname: `/${currentUser.username}`,
+                  state: {
+                    userIdToLoad: currentUser.id
+                  }
+                }}
+                className="ui mini circular image"
+                id="identity-picture"
+              >
                 <img
                   src={baseURL + currentUser.profile_picture}
                   alt={currentUser.username}

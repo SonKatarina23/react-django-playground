@@ -2,23 +2,14 @@
 // ==================================   ACTIONS   ==========================================
 // =========================================================================================
 import {
-  FETCH_POSTS,
   REGISTER_SUCCESS,
   REGISTER_FAILED,
   LOGIN_SUCCESS,
-  LOGIN_FAILED
+  LOGIN_FAILED,
+  FETCH_SINGLE_USER
 } from "./type";
 
 import ChadAPI from "../api/ChadAPI";
-
-// GET POSTS
-export const fetchPosts = () => async dispatch => {
-  const response = await ChadAPI.get("Post/");
-  dispatch({
-    type: FETCH_POSTS,
-    payload: response.data
-  });
-};
 
 // REGISTER NEW USER
 export const register = ({

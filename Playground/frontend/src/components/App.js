@@ -16,9 +16,9 @@ export class App extends Component {
         <Fragment>
           <Switch>
             <CustomRoute exact path="/" component={PostList} />
-            <CustomRoute exact path="/profile" component={Profile} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <CustomRoute exact path="/:username" component={Profile} />
           </Switch>
         </Fragment>
       </BrowserRouter>

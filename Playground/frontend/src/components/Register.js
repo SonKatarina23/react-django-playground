@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { register } from "../actions";
+import { register } from "../actions/authActions";
 
 // Import static images
 import Chadtagram from "../static-images/Chadtagram.png";
