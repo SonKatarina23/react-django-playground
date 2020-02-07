@@ -13,11 +13,21 @@ export class Register extends Component {
     username: "",
     email: "",
     password: "",
-    password2: ""
+    password2: "",
+    gender: "M"
   };
 
   onSubmit = e => {
     e.preventDefault();
+    this.setState({
+      first_name: "",
+      last_name: "",
+      username: "",
+      email: "",
+      password: "",
+      password2: "",
+      gender: ""
+    });
     const {
       first_name,
       last_name,

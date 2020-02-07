@@ -57,7 +57,6 @@ export const register = ({
 
 // LOGIN USER
 export const login = (username, password) => async dispatch => {
-  console.log("LOGIN ACTION INVOKED");
   const config = {
     headers: {
       "Content-Type": "application/json"
@@ -68,7 +67,6 @@ export const login = (username, password) => async dispatch => {
 
   try {
     const res = await ChadAPI.post("login/", body, config);
-    console.log("LOGIN SUCCESS");
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data

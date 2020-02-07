@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import PostList from "./PostList";
 import Register from "./Register";
 import Login from "./Login";
+import CustomRoute from "./CustomRoute";
 
 export class App extends Component {
   render() {
@@ -12,7 +13,7 @@ export class App extends Component {
       <BrowserRouter>
         <Fragment>
           <Switch>
-            <Route exact path="/" component={PostList} />
+            <CustomRoute exact path="/" component={PostList} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
           </Switch>
