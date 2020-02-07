@@ -36,6 +36,11 @@ a {
   height: 50px !important;
 }
 
+#identity-icon {
+  width: 250px !important;
+  height: 250px !important;
+}
+
 #follow-profile {
   width: 120px;
 }
