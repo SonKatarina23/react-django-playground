@@ -1,6 +1,10 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { fetchSingleUser } from "../actions/usersAction";
+import {
+  fetchSingleUser,
+  followUser,
+  unfollowUser
+} from "../actions/usersAction";
 
 import Navbar from "./Navbar";
 import DefaultMale from "../static-images/default-male-pfp.png";
@@ -48,16 +52,51 @@ export class Profile extends Component {
     }
   }
 
+  follow = () => {
+    this.props.followUser(this.props.location.state.userToLoad.id);
+  };
+
+  unfollow = () => {
+    this.props.unfollowUser(this.props.location.state.userToLoad.id);
+  };
+
   followBtn() {
     const { userToLoad } = this.props.location.state;
     const { currentUser } = this.props;
+
+    const isFollowing = userToLoad.followers.find(
+      followerID => followerID === currentUser.id
+    )
+      ? true
+      : false;
+
     if (userToLoad.id !== currentUser.id) {
-      return (
-        <button className="ui button small primary" id="follow-profile">
-          <i className="user icon"></i>
-          Follow
-        </button>
-      );
+      if (isFollowing) {
+        return (
+          <div
+            onClick={this.unfollow}
+            className="ui animated button"
+            id="follow-profile"
+          >
+            <div className="visible content">Following</div>
+            <div className="hidden content">
+              <i className="minus circle icon"></i>
+              Unfollow
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <button
+            onClick={this.follow}
+            className="ui button small primary"
+            id="follow-profile"
+          >
+            <i className="user icon"></i>
+            Follow
+          </button>
+        );
+      }
     } else return <Fragment></Fragment>;
   }
 
@@ -175,4 +214,8 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { fetchSingleUser })(Profile);
+export default connect(mapStateToProps, {
+  fetchSingleUser,
+  followUser,
+  unfollowUser
+})(Profile);
