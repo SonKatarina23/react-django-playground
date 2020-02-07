@@ -36,7 +36,10 @@ export class PostList extends Component {
           <div className="ui items">
             <div className="item">
               <Link to="/profile" className="ui mini circular image">
-                <img src={baseURL + currentUser.profile_picture} alt="Chae" />
+                <img
+                  src={baseURL + currentUser.profile_picture}
+                  alt={currentUser.username}
+                />
               </Link>
               <div className="content">
                 <a href="" className="">
