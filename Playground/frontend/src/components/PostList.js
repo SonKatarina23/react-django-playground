@@ -58,7 +58,7 @@ export class PostList extends Component {
 
   renderIdentity() {
     const { currentUser } = this.props;
-
+    console.log(`Identity IMG URL : ${currentUser.profile_picture}`);
     return (
       // IDENTITY
       <section id="identity">
@@ -78,9 +78,17 @@ export class PostList extends Component {
                 {this.getImage()}
               </Link>
               <div className="content">
-                <a href="" className="">
+                <Link
+                  to={{
+                    pathname: `/${currentUser.username}`,
+                    state: {
+                      userToLoad: currentUser
+                    }
+                  }}
+                >
                   <strong>{`${currentUser.first_name} ${currentUser.last_name}`}</strong>
-                </a>
+                </Link>
+
                 <div className="description">
                   <p className="ui meta tiny">{`@${currentUser.username}`}</p>
                 </div>

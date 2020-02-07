@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 export class CustomRoute extends Component {
   render() {
     const { component: Component, auth, ...restProps } = this.props;
-
+    // return <Component {...restProps} />;
     if (!auth.isAuthenticated) return <Redirect to="/login" />;
     else return <Component {...restProps} />;
   }

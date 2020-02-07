@@ -58,7 +58,6 @@ export const login = (username, password) => async dispatch => {
 
   try {
     const res = await ChadAPI.post("login/", body, config);
-    console.log(res.data);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data

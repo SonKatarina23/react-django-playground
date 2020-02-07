@@ -18,6 +18,10 @@ export class Profile extends Component {
     const baseURL = "http://localhost:8000";
     const { userToLoad } = this.props.location.state;
     if (userToLoad.profile_picture) {
+      console.log(
+        "USER PUNYA PHOTO PROFILE : " +
+          `${baseURL + userToLoad.profile_picture}`
+      );
       return (
         <img
           src={baseURL + userToLoad.profile_picture}
@@ -63,24 +67,24 @@ export class Profile extends Component {
     } else return <Fragment></Fragment>;
   }
 
-  renderGallery() {
-    const { userID } = this.props.location.state.userToLoad;
+  // renderGallery() {
+  //   const { userID } = this.props.location.state.userToLoad;
 
-    return posts.map(post => {
-      return (
-        <div key={post.id} className="five wide column mb-2">
-          <a href="">
-            <img
-              src={post.photo}
-              alt=""
-              className="ui image fluid"
-              id="photo-feed"
-            />
-          </a>
-        </div>
-      );
-    });
-  }
+  //   return posts.map(post => {
+  //     return (
+  //       <div key={post.id} className="five wide column mb-2">
+  //         <a href="">
+  //           <img
+  //             src={post.photo}
+  //             alt=""
+  //             className="ui image fluid"
+  //             id="photo-feed"
+  //           />
+  //         </a>
+  //       </div>
+  //     );
+  //   });
+  // }
 
   renderPage() {
     const {
@@ -156,7 +160,8 @@ export class Profile extends Component {
             {/* GALLERY */}
             <div className="ui grid">
               <div className="thirteen wide column mx-auto">
-                <div className="ui grid">{this.renderGallery()}</div>
+                {/* <div className="ui grid">{this.renderGallery()}</div> */}
+                <div className="ui grid">asd</div>
               </div>
             </div>
           </div>
@@ -171,6 +176,7 @@ export class Profile extends Component {
 
 const mapStateToProps = state => {
   return {
+    isAuthenticated: state.auth.isAuthenticated,
     currentUser: state.auth.currentUser
   };
 };

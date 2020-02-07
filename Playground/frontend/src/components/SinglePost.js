@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { Link } from "react-router-dom";
 import TimeAgo from "react-timeago";
 
 // import static files
@@ -35,7 +36,6 @@ export class SinglePost extends Component {
   }
 
   renderList() {
-    console.log(this.props.posts.photo);
     const {
       photo,
       captions,
@@ -44,7 +44,7 @@ export class SinglePost extends Component {
       comments,
       created_at
     } = this.props.posts;
-
+    console.log(`Single post IMG URL : ${owner.profile_picture}`);
     return (
       <Fragment>
         <section id="single-post">
@@ -58,16 +58,21 @@ export class SinglePost extends Component {
                   </p>
                 </div>
                 <div className="ui image">
-                  <a href="">
+                  <Link
+                    to={{
+                      pathname: `/${owner.username}`,
+                      state: {
+                        userToLoad: owner
+                      }
+                    }}
+                  >
                     <img
                       className="ui avatar massive image"
                       src={owner.profile_picture}
                       alt={`${owner.first_name} ${owner.last_name}`}
                     />
-                  </a>
-                  <a href="" className="ui big header">
                     {owner.username}
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
