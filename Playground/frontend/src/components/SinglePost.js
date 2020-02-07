@@ -44,7 +44,6 @@ export class SinglePost extends Component {
       comments,
       created_at
     } = this.props.posts;
-    console.log(`Single post IMG URL : ${owner.profile_picture}`);
     return (
       <Fragment>
         <section id="single-post">

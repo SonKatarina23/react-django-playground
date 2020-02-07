@@ -15,16 +15,11 @@ export class Profile extends Component {
   }
 
   getImage() {
-    const baseURL = "http://localhost:8000";
     const { userToLoad } = this.props.location.state;
     if (userToLoad.profile_picture) {
-      console.log(
-        "USER PUNYA PHOTO PROFILE : " +
-          `${baseURL + userToLoad.profile_picture}`
-      );
       return (
         <img
-          src={baseURL + userToLoad.profile_picture}
+          src={userToLoad.profile_picture}
           alt={userToLoad.username}
           className="ui middle aligned tiny image border"
           id="profile-picture"
@@ -57,7 +52,6 @@ export class Profile extends Component {
     const { userToLoad } = this.props.location.state;
     const { currentUser } = this.props;
     if (userToLoad.id !== currentUser.id) {
-      console.log("this is not own profile");
       return (
         <button className="ui button small primary" id="follow-profile">
           <i className="user icon"></i>

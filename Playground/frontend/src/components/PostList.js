@@ -18,20 +18,10 @@ export class PostList extends Component {
   }
 
   getImage() {
-    /**
-     * P.S Note :
-     * IDK for whatever reasons despite the fact that user's profile picture is clearly shown
-     * with full URL in the back end, when axios fetches it with thunk through action creators,
-     * it only gets 'media/....' as URL, so I have to add this somewhat strange configuration
-     */
-    const baseURL = "http://localhost:8000";
     const { currentUser } = this.props;
     if (currentUser.profile_picture) {
       return (
-        <img
-          src={baseURL + currentUser.profile_picture}
-          alt={currentUser.username}
-        />
+        <img src={currentUser.profile_picture} alt={currentUser.username} />
       );
     } else {
       let img;
@@ -58,7 +48,6 @@ export class PostList extends Component {
 
   renderIdentity() {
     const { currentUser } = this.props;
-    console.log(`Identity IMG URL : ${currentUser.profile_picture}`);
     return (
       // IDENTITY
       <section id="identity">

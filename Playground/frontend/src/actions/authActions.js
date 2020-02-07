@@ -11,6 +11,8 @@ import {
 
 import ChadAPI from "../api/ChadAPI";
 
+const BASE_API_URL = "http://localhost:8000";
+
 // REGISTER NEW USER
 export const register = ({
   first_name,
@@ -58,9 +60,21 @@ export const login = (username, password) => async dispatch => {
 
   try {
     const res = await ChadAPI.post("login/", body, config);
+    /*
+     * IDK for whatever reason, with login API it doesn't generate full URL
+     */
+    let { user } = res.data;
+    user = {
+      ...user,
+      profile_picture: BASE_API_URL + user.profile_picture
+    };
+
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: res.data
+      payload: {
+        ...res.data,
+        user
+      }
     });
   } catch (e) {
     dispatch({ type: LOGIN_FAILED });
