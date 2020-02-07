@@ -11,7 +11,7 @@ class UserCRUDPermission(permissions.BasePermission):
 
     # You cannot alter a User unless : 1) You're that user itself or 2) You're a super user
     def has_object_permission(self, request, view, obj):
-        if request.method in permissions.SAFE_METHODS:
+        if request.method in permissions.SAFE_METHODS or request.method == 'PATCH':
             return True
         return request.user.id == obj.id or request.user.is_superuser
 

@@ -13,13 +13,16 @@ import DefaultUnknown from "../static-images/default-unknown-pfp.png";
 import "../css/style.css";
 
 export class Profile extends Component {
+  state = {
+    userToLoad: this.props.location.state.userToLoad
+  };
   componentDidMount() {
-    const { userToLoad } = this.props.location.state;
+    const { userToLoad } = this.state;
     this.props.fetchSingleUser(userToLoad.id);
   }
 
   getImage() {
-    const { userToLoad } = this.props.location.state;
+    const { userToLoad } = this.state;
     if (userToLoad.profile_picture) {
       return (
         <img
@@ -52,24 +55,32 @@ export class Profile extends Component {
     }
   }
 
-  follow = () => {
-    this.props.followUser(this.props.location.state.userToLoad.id);
-  };
+  follow = async () => {};
 
-  unfollow = () => {
-    this.props.unfollowUser(this.props.location.state.userToLoad.id);
+  unfollow = async () => {
+    const { userToLoad } = this.state;
+    console.log("Before");
+    console.log(this.props.users);
+    await this.props.unfollowUser(userToLoad.id);
+    console.log("this setstate");
+    this.setState({
+      userToLoad: this.props.users.find(user => user.id === userToLoad.id)
+    });
+    console.log("After");
+    console.log(this.props.users);
   };
 
   followBtn() {
-    const { userToLoad } = this.props.location.state;
+    console.log("render follow button");
+    const { userToLoad } = this.state;
     const { currentUser } = this.props;
 
+    console.log(userToLoad.followers);
     const isFollowing = userToLoad.followers.find(
       followerID => followerID === currentUser.id
     )
       ? true
       : false;
-
     if (userToLoad.id !== currentUser.id) {
       if (isFollowing) {
         return (
@@ -101,7 +112,7 @@ export class Profile extends Component {
   }
 
   // renderGallery() {
-  //   const { userID } = this.props.location.state.userToLoad;
+  //   const { userID } = this.state.userToLoad;
 
   //   return posts.map(post => {
   //     return (
@@ -128,7 +139,7 @@ export class Profile extends Component {
       first_name,
       last_name,
       bio
-    } = this.props.location.state.userToLoad;
+    } = this.state.userToLoad;
     return (
       <Fragment>
         <Navbar />
@@ -208,9 +219,11 @@ export class Profile extends Component {
 }
 
 const mapStateToProps = state => {
+  const { isAuthenticated, currentUser } = state.auth;
   return {
-    isAuthenticated: state.auth.isAuthenticated,
-    currentUser: state.auth.currentUser
+    isAuthenticated,
+    currentUser,
+    users: state.users
   };
 };
 

@@ -14,7 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
             'followers', 'followings', 'posts',
         )
 
-        read_only_fields = ['id', 'followers', 'followings', 'posts']
+        read_only_fields = ['id', 'posts']
 
         extra_kwargs = {
             'password': {

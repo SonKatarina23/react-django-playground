@@ -80,3 +80,18 @@ export const login = (username, password) => async dispatch => {
     dispatch({ type: LOGIN_FAILED });
   }
 };
+
+// HELPER FUNCTION TO GET TOKEN CONFIG ON HEADER
+export const tokenConfig = getState => {
+  const currentToken = getState().auth.token;
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  if (currentToken) {
+    config.headers["Authorization"] = `Token ${currentToken}`;
+  }
+
+  return config;
+};
