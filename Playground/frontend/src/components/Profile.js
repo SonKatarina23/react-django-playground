@@ -107,7 +107,18 @@ export class Profile extends Component {
           </button>
         );
       }
-    } else return <Fragment></Fragment>;
+    } else {
+      return (
+        <button
+          onClick={this.follow}
+          className="ui button small grey"
+          id="follow-profile"
+        >
+          <i className="user times icon m3-"></i>
+          Logout
+        </button>
+      );
+    }
   }
 
   // renderGallery() {

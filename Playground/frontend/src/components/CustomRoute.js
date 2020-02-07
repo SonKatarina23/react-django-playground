@@ -6,8 +6,10 @@ export class CustomRoute extends Component {
   render() {
     const { component: Component, auth, ...restProps } = this.props;
     // return <Component {...restProps} />;
-    if (!auth.isAuthenticated) return <Redirect to="/login" />;
-    else return <Component {...restProps} />;
+    if (!auth.isAuthenticated) {
+      console.log("NOT LOGGED IN SO GO BACK TO LOGIN PAGE");
+      return <Redirect to="/login" />;
+    } else return <Component {...restProps} />;
   }
 }
 
