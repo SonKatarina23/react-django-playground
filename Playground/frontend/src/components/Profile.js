@@ -55,27 +55,26 @@ export class Profile extends Component {
     }
   }
 
-  follow = async () => {};
-
-  unfollow = async () => {
+  follow = async () => {
     const { userToLoad } = this.state;
-    console.log("Before");
-    console.log(this.props.users);
-    await this.props.unfollowUser(userToLoad.id);
-    console.log("this setstate");
+    await this.props.followUser(userToLoad.id);
     this.setState({
       userToLoad: this.props.users.find(user => user.id === userToLoad.id)
     });
-    console.log("After");
-    console.log(this.props.users);
+  };
+
+  unfollow = async () => {
+    const { userToLoad } = this.state;
+    await this.props.unfollowUser(userToLoad.id);
+    this.setState({
+      userToLoad: this.props.users.find(user => user.id === userToLoad.id)
+    });
   };
 
   followBtn() {
-    console.log("render follow button");
     const { userToLoad } = this.state;
     const { currentUser } = this.props;
 
-    console.log(userToLoad.followers);
     const isFollowing = userToLoad.followers.find(
       followerID => followerID === currentUser.id
     )

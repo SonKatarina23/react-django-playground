@@ -3,7 +3,6 @@
 // =========================================================================================
 
 import {
-  FETCH_ALL_USERS,
   FETCH_SINGLE_USER,
   FOLLOW_USER,
   UNFOLLOW_USER,
@@ -12,15 +11,6 @@ import {
 
 import ChadAPI from "../api/ChadAPI";
 import { tokenConfig } from "./authActions";
-
-export const fetchAllUsers = () => async dispatch => {
-  try {
-    const res = await ChadAPI.get("User/");
-    dispatch({ type: FETCH_ALL_USERS, payload: res.data });
-  } catch (e) {
-    console.log(`Error : ${e}`);
-  }
-};
 
 export const fetchSingleUser = id => async (dispatch, getState) => {
   // BASIC CACHES
@@ -37,7 +27,25 @@ export const fetchSingleUser = id => async (dispatch, getState) => {
 };
 
 export const followUser = id => async (dispatch, getState) => {
-  return;
+  const currentUserID = getState().auth.currentUser.id;
+  const users = getState().users;
+  const targetUser = users.find(user => user.id === id);
+
+  try {
+    const newUserObj = {
+      followers: [...targetUser.followers, currentUserID]
+    };
+    const res = await ChadAPI.patch(`User/${id}/`, newUserObj);
+    dispatch({
+      type: FOLLOW_USER,
+      payload: users.map(user => {
+        if (user.id === id) return res.data;
+        else return user;
+      })
+    });
+  } catch (e) {
+    console.log(`Error ${e}`);
+  }
 };
 
 export const unfollowUser = id => async (dispatch, getState) => {
@@ -57,7 +65,6 @@ export const unfollowUser = id => async (dispatch, getState) => {
         else return user;
       })
     });
-    console.log("unfollowing process done");
   } catch (e) {
     console.log(`Error : ${e}`);
   }

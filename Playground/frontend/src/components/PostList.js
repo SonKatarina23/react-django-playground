@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchPosts } from "../actions/postsActions";
-import { fetchSingleUser, fetchAllUsers } from "../actions/usersAction";
+import { fetchSingleUser } from "../actions/usersAction";
 import { Link } from "react-router-dom";
 
 import SinglePost from "./SinglePost";
@@ -16,8 +16,8 @@ import "../css/style.css";
 export class PostList extends Component {
   componentDidMount() {
     this.props.fetchPosts();
-    // this.props.fetchSingleUser(this.props.currentUser.id);
-    this.props.fetchAllUsers();
+    this.props.fetchSingleUser(this.props.currentUser.id);
+    // this.props.fetchAllUsers();
   }
 
   getImage() {
@@ -121,6 +121,5 @@ const mapStateToProps = state => {
 };
 export default connect(mapStateToProps, {
   fetchPosts,
-  fetchSingleUser,
-  fetchAllUsers
+  fetchSingleUser
 })(PostList);

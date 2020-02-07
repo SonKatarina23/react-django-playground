@@ -1,5 +1,4 @@
 import {
-  FETCH_ALL_USERS,
   FETCH_SINGLE_USER,
   FOLLOW_USER,
   UNFOLLOW_USER,
@@ -13,7 +12,6 @@ export default (state = initialState, action) => {
     case FETCH_SINGLE_USER:
       return [...state, action.payload];
 
-    case FETCH_ALL_USERS:
     case FOLLOW_USER:
     case UNFOLLOW_USER:
       return action.payload;
