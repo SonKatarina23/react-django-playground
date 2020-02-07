@@ -52,6 +52,14 @@ class PostViewset(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     permission_classes = (IsAuthenticatedOrReadOnly, UserCRUDPermission,)
 
+    def get_queryset(self):
+        user_id = self.request.query_params.get('by', None)
+        if user_id is None:
+            queryset = Post.objects.all()
+        else:
+            queryset = Post.objects.filter(owner__id=user_id)
+        return queryset
+
     def perform_create(self, serializer):
         if not self.request.user.is_authenticated:
             raise ValueError(

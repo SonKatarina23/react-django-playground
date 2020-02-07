@@ -64,7 +64,8 @@ export class Profile extends Component {
   }
 
   renderGallery() {
-    const { posts } = this.props.location.state.userToLoad;
+    const { userID } = this.props.location.state.userToLoad;
+
     return posts.map(post => {
       return (
         <div key={post.id} className="five wide column mb-2">
