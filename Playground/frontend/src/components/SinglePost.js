@@ -8,10 +8,13 @@ import TimeAgo from "react-timeago";
 import "../css/style.css";
 
 export class SinglePost extends Component {
+  state = { likeIconStyle: { display: "none" } };
+
   toggleLikePost = async () => {
+    this.setState({ likeIconStyle: { display: "block" } });
     const { toggleLike, posts } = this.props;
     await toggleLike(posts.id);
-    console.log("POST LIKE");
+    this.setState({ likeIconStyle: { display: "none" } });
   };
 
   likeBtn() {
@@ -22,6 +25,7 @@ export class SinglePost extends Component {
         <i
           onClick={this.toggleLikePost}
           className="heart like big icon mr-3"
+          id="love"
         ></i>
       );
     } else {
@@ -63,7 +67,7 @@ export class SinglePost extends Component {
     }
   }
 
-  renderList() {
+  renderList = () => {
     const {
       photo,
       captions,
@@ -112,7 +116,15 @@ export class SinglePost extends Component {
                 src={photo}
                 className="ui big image"
                 alt={owner.username}
+                id="image-holder"
               />
+              <h2 className="ui inverted icon header">
+                <i
+                  className="heart massive icon"
+                  style={this.state.likeIconStyle}
+                  id="love-image"
+                ></i>
+              </h2>
             </div>
 
             {/* LIKE, COMMENT, AND CAPTIONS */}
@@ -157,7 +169,7 @@ export class SinglePost extends Component {
         </section>
       </Fragment>
     );
-  }
+  };
 
   render() {
     return <div>{this.renderList()}</div>;

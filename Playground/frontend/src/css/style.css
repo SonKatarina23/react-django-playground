@@ -51,6 +51,26 @@ a {
   border: 1px solid blue;
 }
 
+#love {
+  color: red !important;
+}
+
+#image-holder {
+  position: relative !important;
+  display: block !important;
+  height: 800px !important;
+}
+
+#love-image {
+  left: 50% !important;
+  top: 50% !important;
+  position: absolute !important;
+  margin-top: -25px !important;
+  margin-left: -25px !important;
+  color: red !important;
+  opacity: 0.7 !important;
+}
+
 .test {
   background-color: red;
 }
