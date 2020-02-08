@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 // Import static files
 import "../css/style.css";
@@ -7,6 +8,7 @@ import Chadtagram from "../static-images/Chadtagram.png";
 
 export class Navbar extends Component {
   render() {
+    const { currentUser } = this.props;
     return (
       <section id="navbar" className="mb-5">
         <div className="ui pointing fixed menu mb-5">
@@ -33,15 +35,24 @@ export class Navbar extends Component {
               </div>
             </div>
             <div className="right menu">
-              <a className="item">
+              <Link to="/" className="item">
                 <i className="heart outline big icon"></i>
-              </a>
-              <a className="item">
+              </Link>
+
+              <Link
+                to={{
+                  pathname: `/${currentUser.username}`,
+                  state: {
+                    userToLoad: currentUser
+                  }
+                }}
+                className="item"
+              >
                 <i className="user circle big icon"></i>
-              </a>
-              <a className="item">
+              </Link>
+              <Link to="/" className="item">
                 <i className="mobile alternate big icon"></i>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -51,4 +62,10 @@ export class Navbar extends Component {
   }
 }
 
-export default Navbar;
+const mapStateToProps = state => {
+  return {
+    currentUser: state.auth.currentUser
+  };
+};
+
+export default connect(mapStateToProps)(Navbar);

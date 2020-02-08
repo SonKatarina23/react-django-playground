@@ -5,8 +5,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAILED,
   LOGIN_SUCCESS,
-  LOGIN_FAILED,
-  FETCH_SINGLE_USER
+  LOGIN_FAILED
 } from "./type";
 
 import ChadAPI from "../api/ChadAPI";

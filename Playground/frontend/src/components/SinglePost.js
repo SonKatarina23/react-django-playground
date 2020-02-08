@@ -143,9 +143,9 @@ export class SinglePost extends Component {
             <div className="extra content">
               {/* COMMENT COUNT */}
               <div className="mb-3">
-                <a href="" className="ui tiny">
+                <Link to="/" className="ui tiny">
                   View {comments.length} comments
-                </a>
+                </Link>
               </div>
 
               {/* INDIVIDUAL COMMENT */}
@@ -157,9 +157,7 @@ export class SinglePost extends Component {
               <div className="ui medium form mb-4">
                 <div className="ui fluid transparent action input">
                   <input type="text" placeholder="Add Comment..." />
-                  <a href="" className="ui tiny ml-3 meta">
-                    Post
-                  </a>
+                  <div className="ui tiny ml-3 meta">Post</div>
                 </div>
               </div>
             </div>

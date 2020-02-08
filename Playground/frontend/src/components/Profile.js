@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { fetchSingleUser, toggleFollowing } from "../actions/usersAction";
 import { fetchPostsByOwner } from "../actions/postsActions";
 
@@ -122,14 +123,14 @@ export class Profile extends Component {
     return posts.map(post => {
       return (
         <div key={post.id} className="five wide column mb-2">
-          <a href="">
+          <Link to="/">
             <img
               src={post.photo}
               alt=""
               className="ui image fluid"
               id="photo-feed"
             />
-          </a>
+          </Link>
         </div>
       );
     });
