@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { fetchSingleUser, toggleFollowing } from "../actions/usersAction";
+import { fetchPostsByOwner } from "../actions/postsActions";
 
 import Navbar from "./Navbar";
 import DefaultMale from "../static-images/default-male-pfp.png";
@@ -14,7 +15,9 @@ export class Profile extends Component {
   };
   componentDidMount() {
     const { userToLoad } = this.state;
-    this.props.fetchSingleUser(userToLoad.id);
+    const { fetchSingleUser, fetchPostsByOwner } = this.props;
+    fetchSingleUser(userToLoad.id);
+    fetchPostsByOwner(userToLoad.id);
   }
 
   getImage() {
@@ -59,6 +62,10 @@ export class Profile extends Component {
     });
   };
 
+  logout() {
+    console.log("Logging out . . .");
+  }
+
   followBtn() {
     const { userToLoad } = this.state;
     const { currentUser } = this.props;
@@ -98,7 +105,7 @@ export class Profile extends Component {
     } else {
       return (
         <button
-          onClick={this.follow}
+          onClick={this.logout}
           className="ui button small grey"
           id="follow-profile"
         >
@@ -109,24 +116,24 @@ export class Profile extends Component {
     }
   }
 
-  // renderGallery() {
-  //   const { userID } = this.state.userToLoad;
-
-  //   return posts.map(post => {
-  //     return (
-  //       <div key={post.id} className="five wide column mb-2">
-  //         <a href="">
-  //           <img
-  //             src={post.photo}
-  //             alt=""
-  //             className="ui image fluid"
-  //             id="photo-feed"
-  //           />
-  //         </a>
-  //       </div>
-  //     );
-  //   });
-  // }
+  renderGallery() {
+    const { id } = this.state.userToLoad;
+    const posts = this.props.posts.filter(post => post.owner.id === id);
+    return posts.map(post => {
+      return (
+        <div key={post.id} className="five wide column mb-2">
+          <a href="">
+            <img
+              src={post.photo}
+              alt=""
+              className="ui image fluid"
+              id="photo-feed"
+            />
+          </a>
+        </div>
+      );
+    });
+  }
 
   renderPage() {
     const {
@@ -203,7 +210,7 @@ export class Profile extends Component {
             <div className="ui grid">
               <div className="thirteen wide column mx-auto">
                 {/* <div className="ui grid">{this.renderGallery()}</div> */}
-                <div className="ui grid">asd</div>
+                <div className="ui grid">{this.renderGallery()}</div>
               </div>
             </div>
           </div>
@@ -221,11 +228,13 @@ const mapStateToProps = state => {
   return {
     isAuthenticated,
     currentUser,
+    posts: state.posts,
     users: state.users
   };
 };
 
 export default connect(mapStateToProps, {
+  fetchPostsByOwner,
   fetchSingleUser,
   toggleFollowing
 })(Profile);

@@ -48,7 +48,7 @@ a {
 #photo-feed {
   width: 250px !important;
   height: 250px !important;
-  border: 0.25px groove black;
+  border: 1px solid blue;
 }
 
 .test {
