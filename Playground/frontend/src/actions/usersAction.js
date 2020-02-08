@@ -9,7 +9,6 @@ import {
 } from "./type";
 
 import ChadAPI from "../api/ChadAPI";
-import { tokenConfig } from "./authActions";
 
 export const fetchSingleUser = id => async (dispatch, getState) => {
   // BASIC CACHES

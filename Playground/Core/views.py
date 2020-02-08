@@ -53,11 +53,25 @@ class PostViewset(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly, UserCRUDPermission,)
 
     def get_queryset(self):
+        # Query by owner
         user_id = self.request.query_params.get('by', None)
         if user_id is None:
+            queryset = Post.objects.none()
+        else:
+            queryset = Post.objects.filter(
+                owner__id=user_id).order_by('-created_at')
+
+        # Query by AUD (Abbrv for Authenticated / Authorized User ID)
+        AUD = self.request.query_params.get('AUD', None)
+        if AUD is None:
             queryset = Post.objects.all()
         else:
-            queryset = Post.objects.filter(owner__id=user_id)
+            auth_user = User.objects.get(id=AUD)
+            auth_user_followings = auth_user.followings.all()
+            queryset = Post.objects.filter(
+                owner__in=auth_user_followings
+            )
+
         return queryset
 
     def perform_create(self, serializer):
