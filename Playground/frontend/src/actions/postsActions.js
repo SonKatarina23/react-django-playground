@@ -14,7 +14,7 @@ import _ from "lodash";
 
 export const fetchSinglePost = id => async (dispatch, getState) => {
   const post = getState().posts.find(post => post.id === id);
-  if (post) dispatch({ type: DATA_ALREADY_EXISTS });
+  if (post) return { type: DATA_ALREADY_EXISTS };
   else {
     try {
       const res = await ChadAPI.get(`Post/${id}`);

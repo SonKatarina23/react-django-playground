@@ -71,12 +71,12 @@ export class Profile extends Component {
     const { userToLoad } = this.state;
     const { currentUser } = this.props;
 
-    const isFollowing = userToLoad.followers.find(
-      followerID => followerID === currentUser.id
-    )
-      ? true
-      : false;
     if (userToLoad.id !== currentUser.id) {
+      const isFollowing = userToLoad.followers.find(
+        followerID => followerID === currentUser.id
+      )
+        ? true
+        : false;
       if (isFollowing) {
         return (
           <div
@@ -123,7 +123,14 @@ export class Profile extends Component {
     return posts.map(post => {
       return (
         <div key={post.id} className="five wide column mb-2">
-          <Link to="/">
+          <Link
+            to={{
+              pathname: `/p/${id}`,
+              state: {
+                postToLoad: post
+              }
+            }}
+          >
             <img
               src={post.photo}
               alt=""
@@ -210,7 +217,6 @@ export class Profile extends Component {
             {/* GALLERY */}
             <div className="ui grid">
               <div className="thirteen wide column mx-auto">
-                {/* <div className="ui grid">{this.renderGallery()}</div> */}
                 <div className="ui grid">{this.renderGallery()}</div>
               </div>
             </div>

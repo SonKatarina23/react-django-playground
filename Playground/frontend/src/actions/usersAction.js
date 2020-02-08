@@ -13,7 +13,7 @@ import ChadAPI from "../api/ChadAPI";
 export const fetchSingleUser = id => async (dispatch, getState) => {
   // BASIC CACHES
   const user = getState().users.find(user => id === user.id);
-  if (user) dispatch({ type: DATA_ALREADY_EXISTS });
+  if (user) return { type: DATA_ALREADY_EXISTS };
   // DATA AINT AVAILABLE
   else {
     const res = await ChadAPI.get(`User/${id}`);
@@ -22,6 +22,18 @@ export const fetchSingleUser = id => async (dispatch, getState) => {
       payload: res.data
     });
   }
+};
+
+export const fetchUsersFromPost = postID => async (dispatch, getState) => {
+  let IDs = [];
+  const post = getState().posts.find(post => post.id === postID);
+  if (!post) return { type: DATA_ALREADY_EXISTS };
+
+  IDs.push(post.owner.id);
+  const { comments } = post;
+  comments.forEach(comment => IDs.push(comment.owner.id));
+
+  IDs.forEach(async id => await dispatch(fetchSingleUser(id)));
 };
 
 // NASTY STUFF BRO

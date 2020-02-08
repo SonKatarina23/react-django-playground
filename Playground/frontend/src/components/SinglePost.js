@@ -69,6 +69,7 @@ export class SinglePost extends Component {
 
   renderList = () => {
     const {
+      id,
       photo,
       captions,
       owner,
@@ -143,7 +144,15 @@ export class SinglePost extends Component {
             <div className="extra content">
               {/* COMMENT COUNT */}
               <div className="mb-3">
-                <Link to="/" className="ui tiny">
+                <Link
+                  to={{
+                    pathname: `/p/${id}`,
+                    state: {
+                      postToLoad: this.props.posts
+                    }
+                  }}
+                  className="ui tiny"
+                >
                   View {comments.length} comments
                 </Link>
               </div>
