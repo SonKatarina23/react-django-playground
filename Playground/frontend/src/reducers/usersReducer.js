@@ -1,7 +1,6 @@
 import {
   FETCH_SINGLE_USER,
-  FOLLOW_USER,
-  UNFOLLOW_USER,
+  TOGGLE_FOLLOWING,
   DATA_ALREADY_EXISTS
 } from "../actions/type";
 
@@ -12,8 +11,7 @@ export default (state = initialState, action) => {
     case FETCH_SINGLE_USER:
       return [...state, action.payload];
 
-    case FOLLOW_USER:
-    case UNFOLLOW_USER:
+    case TOGGLE_FOLLOWING:
       return action.payload;
 
     case DATA_ALREADY_EXISTS:

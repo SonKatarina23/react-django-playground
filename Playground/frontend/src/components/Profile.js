@@ -1,10 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import {
-  fetchSingleUser,
-  followUser,
-  unfollowUser
-} from "../actions/usersAction";
+import { fetchSingleUser, toggleFollowing } from "../actions/usersAction";
 
 import Navbar from "./Navbar";
 import DefaultMale from "../static-images/default-male-pfp.png";
@@ -55,17 +51,9 @@ export class Profile extends Component {
     }
   }
 
-  follow = async () => {
+  toggleFollowing = async () => {
     const { userToLoad } = this.state;
-    await this.props.followUser(userToLoad.id);
-    this.setState({
-      userToLoad: this.props.users.find(user => user.id === userToLoad.id)
-    });
-  };
-
-  unfollow = async () => {
-    const { userToLoad } = this.state;
-    await this.props.unfollowUser(userToLoad.id);
+    await this.props.toggleFollowing(userToLoad.id);
     this.setState({
       userToLoad: this.props.users.find(user => user.id === userToLoad.id)
     });
@@ -84,7 +72,7 @@ export class Profile extends Component {
       if (isFollowing) {
         return (
           <div
-            onClick={this.unfollow}
+            onClick={this.toggleFollowing}
             className="ui animated button"
             id="follow-profile"
           >
@@ -98,7 +86,7 @@ export class Profile extends Component {
       } else {
         return (
           <button
-            onClick={this.follow}
+            onClick={this.toggleFollowing}
             className="ui button small primary"
             id="follow-profile"
           >
@@ -239,6 +227,5 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
   fetchSingleUser,
-  followUser,
-  unfollowUser
+  toggleFollowing
 })(Profile);

@@ -4,8 +4,7 @@
 
 import {
   FETCH_SINGLE_USER,
-  FOLLOW_USER,
-  UNFOLLOW_USER,
+  TOGGLE_FOLLOWING,
   DATA_ALREADY_EXISTS
 } from "./type";
 
@@ -26,42 +25,31 @@ export const fetchSingleUser = id => async (dispatch, getState) => {
   }
 };
 
-export const followUser = id => async (dispatch, getState) => {
+export const toggleFollowing = id => async (dispatch, getState) => {
   const currentUserID = getState().auth.currentUser.id;
   const users = getState().users;
   const targetUser = users.find(user => user.id === id);
-
-  try {
-    const newUserObj = {
+  let tempData;
+  if (targetUser.followers.find(followerID => followerID === currentUserID)) {
+    console.log("we are currently following, trying to unfollow");
+    tempData = {
+      followers: targetUser.followers.filter(
+        followerID => followerID !== currentUserID
+      )
+    };
+  } else {
+    console.log("we are currently NOT following, trying to follow");
+    tempData = {
       followers: [...targetUser.followers, currentUserID]
     };
-    const res = await ChadAPI.patch(`User/${id}/`, newUserObj);
-    dispatch({
-      type: FOLLOW_USER,
-      payload: users.map(user => {
-        if (user.id === id) return res.data;
-        else return user;
-      })
-    });
-  } catch (e) {
-    console.log(`Error ${e}`);
   }
-};
-
-export const unfollowUser = id => async (dispatch, getState) => {
-  const currentUserID = getState().auth.currentUser.id;
-  const users = getState().users;
-  const targetUser = users.find(user => user.id === id);
 
   try {
-    const newUserObj = {
-      followers: targetUser.followers.filter(id => id !== currentUserID)
-    };
-    const res = await ChadAPI.patch(`User/${id}/`, newUserObj);
+    const res = await ChadAPI.patch(`User/${id}/`, tempData);
     dispatch({
-      type: UNFOLLOW_USER,
+      type: TOGGLE_FOLLOWING,
       payload: users.map(user => {
-        if (user.id === id) return { ...res.data };
+        if (user.id === id) return res.data;
         else return user;
       })
     });
