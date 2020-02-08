@@ -50,7 +50,7 @@ class UserLoginView(ObtainAuthToken):
 class PostViewset(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     queryset = Post.objects.all()
-    permission_classes = (IsAuthenticatedOrReadOnly, UserCRUDPermission,)
+    permission_classes = (PostCommentPermission,)
 
     def get_queryset(self):
         # Query by owner

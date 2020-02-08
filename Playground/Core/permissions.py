@@ -17,7 +17,8 @@ class UserCRUDPermission(permissions.BasePermission):
 
 
 class PostCommentPermission(permissions.BasePermission):
+
     def has_object_permission(self, request, view, obj):
-        if request.method in permissions.SAFE_METHODS:
+        if request.method in permissions.SAFE_METHODS or request.method == 'PATCH':
             return True
         return request.user.id == obj.owner.id

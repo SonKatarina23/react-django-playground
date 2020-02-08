@@ -2,7 +2,8 @@ import {
   DATA_ALREADY_EXISTS,
   FETCH_POSTS_BY_OWNER,
   FETCH_POSTS_BY_FOLLOWINGS,
-  FETCH_SINGLE_POST
+  FETCH_SINGLE_POST,
+  TOGGLE_LIKE
 } from "../actions/type";
 
 const initialState = [];
@@ -11,6 +12,7 @@ export default (state = initialState, action) => {
     case FETCH_SINGLE_POST:
       return [...state, action.payload];
 
+    case TOGGLE_LIKE:
     case FETCH_POSTS_BY_OWNER:
     case FETCH_POSTS_BY_FOLLOWINGS:
       return action.payload;

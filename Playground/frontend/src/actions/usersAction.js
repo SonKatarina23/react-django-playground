@@ -39,6 +39,7 @@ export const toggleFollowing = id => async (dispatch, getState) => {
       ? targetUser.followers.filter(followerID => followerID !== currentUserID)
       : [...targetUser.followers, currentUserID]
   };
+
   try {
     const res = await ChadAPI.patch(`User/${id}/`, tempData);
     dispatch({

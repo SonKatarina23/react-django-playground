@@ -1,4 +1,6 @@
 import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { toggleLike } from "../actions/postsActions";
 import { Link } from "react-router-dom";
 import TimeAgo from "react-timeago";
 
@@ -6,6 +8,32 @@ import TimeAgo from "react-timeago";
 import "../css/style.css";
 
 export class SinglePost extends Component {
+  toggleLikePost = async () => {
+    const { toggleLike, posts } = this.props;
+    await toggleLike(posts.id);
+    console.log("POST LIKE");
+  };
+
+  likeBtn() {
+    const { currentUserID, posts } = this.props;
+    const isLiking = posts.liked_by.find(id => id === currentUserID);
+    if (isLiking) {
+      return (
+        <i
+          onClick={this.toggleLikePost}
+          className="heart like big icon mr-3"
+        ></i>
+      );
+    } else {
+      return (
+        <i
+          onClick={this.toggleLikePost}
+          className="heart outline like big icon mr-3"
+        ></i>
+      );
+    }
+  }
+
   renderComment() {
     const { comments } = this.props.posts;
     if (comments.length <= 2) {
@@ -44,6 +72,7 @@ export class SinglePost extends Component {
       comments,
       created_at
     } = this.props.posts;
+    console.log("component rendered");
     return (
       <Fragment>
         <section id="single-post">
@@ -78,12 +107,17 @@ export class SinglePost extends Component {
 
             {/* POST IMAGE */}
             <div className="image">
-              <img src={photo} className="ui big image" alt="" />
+              <img
+                onDoubleClick={this.toggleLikePost}
+                src={photo}
+                className="ui big image"
+                alt={owner.username}
+              />
             </div>
 
             {/* LIKE, COMMENT, AND CAPTIONS */}
             <div className="content">
-              <i className="heart outline like big icon mr-3"></i>
+              {this.likeBtn()}
               <i className="comment outline like big icon"></i>
             </div>
             <div className="content">
@@ -130,4 +164,10 @@ export class SinglePost extends Component {
   }
 }
 
-export default SinglePost;
+const mapStateToProps = state => {
+  return {
+    currentUserID: state.auth.currentUser.id
+  };
+};
+
+export default connect(mapStateToProps, { toggleLike })(SinglePost);

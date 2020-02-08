@@ -55,7 +55,7 @@ class PostSerializer(serializers.ModelSerializer):
         fields = ('id', 'owner', 'photo', 'captions',
                   'created_at', 'liked_by', 'comments',)
         read_only_fields = ['id', 'owner',
-                            'created_at', 'comments', 'liked_by']
+                            'created_at', 'comments', ]
 
     def create(self, validated_data):
         post = Post.objects.create(**validated_data)
