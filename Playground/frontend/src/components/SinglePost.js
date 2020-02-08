@@ -40,7 +40,7 @@ export class SinglePost extends Component {
 
   renderComment() {
     const { comments } = this.props.posts;
-    if (comments.length <= 2) {
+    if (comments.length <= 3) {
       return comments.map(comment => {
         return (
           <div key={comment.id}>
@@ -55,7 +55,7 @@ export class SinglePost extends Component {
       let renderedComments = [];
       for (let i = 0; i < 2; i++) {
         renderedComments.push(
-          <div className={comments[i].id}>
+          <div key={comments[i].id}>
             <div className="description mb-3">
               <strong>{comments[i].owner.username} </strong>
               {comments[i].comment}
@@ -76,7 +76,6 @@ export class SinglePost extends Component {
       comments,
       created_at
     } = this.props.posts;
-    console.log("component rendered");
     return (
       <Fragment>
         <section id="single-post">
@@ -178,7 +177,8 @@ export class SinglePost extends Component {
 
 const mapStateToProps = state => {
   return {
-    currentUserID: state.auth.currentUser.id
+    currentUserID: state.auth.currentUser.id,
+    users: state.users
   };
 };
 
