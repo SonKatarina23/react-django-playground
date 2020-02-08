@@ -3,9 +3,9 @@
 // =========================================================================================
 
 import {
+  DATA_ALREADY_EXISTS,
   FETCH_SINGLE_USER,
-  TOGGLE_FOLLOWING,
-  DATA_ALREADY_EXISTS
+  TOGGLE_FOLLOWING
 } from "./type";
 
 import ChadAPI from "../api/ChadAPI";
@@ -13,7 +13,7 @@ import ChadAPI from "../api/ChadAPI";
 export const fetchSingleUser = id => async (dispatch, getState) => {
   // BASIC CACHES
   const user = getState().users.find(user => id === user.id);
-  if (user) dispatch({ type: DATA_ALREADY_EXISTS, payload: user });
+  if (user) dispatch({ type: DATA_ALREADY_EXISTS });
   // DATA AINT AVAILABLE
   else {
     const res = await ChadAPI.get(`User/${id}`);
